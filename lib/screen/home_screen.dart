@@ -1,15 +1,20 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:quizzler/const/custom_button.dart';
-import 'package:quizzler/const/question.dart';
+import 'package:quizzler/const/colors.dart';
+import 'package:quizzler/const/styles.dart';
+import 'package:quizzler/data/question_data.dart';
+import 'package:quizzler/screen/congratulations.dart';
+import 'package:quizzler/widgets/custom_button.dart';
+import 'package:quizzler/controller/question_controller.dart';
 import 'package:get/get.dart';
 import 'package:quizzler/controller/home_screen_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  Question question = Get.put(Question());
+  QuestionController questionController = Get.put(QuestionController());
   HomeScreenController homeScreenController = Get.put(HomeScreenController());
+  QuestionData questionData = QuestionData();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -18,90 +23,42 @@ class HomeScreen extends StatelessWidget {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
-          //crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Obx(() => Expanded(
                   flex: 8,
                   child: Center(
                     child: Text(
-                      // "This is the First Question?",
-                      question.questionList[question.questionNumber.value],
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      questionData.questionList[
+                          questionController.questionNumber.value],
+                      style: textStyles,
                     ),
                   ),
                 )),
             Expanded(
               child: CustomButton(
                   titleText: 'True',
-                  color: Colors.green,
+                  color: greenColor,
                   onPressed: () {
                     homeScreenController.trueValue();
-                    // if (question.answer[question.questionNumber.value] ==
-                    //     true) {
-                    //   question.correctAnswer.value++;
-                    //   question.checkAnswer.value = true;
-                    //   homeScreenController.icon = question.checkAnswer.value
-                    //       ? Icon(Icons.check, color: Colors.green)
-                    //       : Icon(Icons.close, color: Colors.red);
-                    //   homeScreenController.iconList
-                    //       .add(homeScreenController.icon);
-                    //   //print('Correct${question.correctAnswer.value}');
-                    // } else {
-                    //   question.checkAnswer.value = false;
-                    //   question.incorrectAnswer.value++;
-                    //   homeScreenController.icon = question.checkAnswer.value
-                    //       ? Icon(Icons.check, color: Colors.green)
-                    //       : Icon(Icons.close, color: Colors.red);
-                    //   homeScreenController.iconList
-                    //       .add(homeScreenController.icon);
-                    //   //print('InCorrect${question.incorrectAnswer.value}');
-                    // }
-                    // question.questionNumber.value++;
-                    // //  print('You Clicked the True Button');
-                    // if (question.questionNumber.value ==
-                    //     question.questionList.length) {
-                    //   question.questionNumber.value = 0;
+                    // if (questionController.questionNumber.value ==
+                    //     questionData.questionList.length) {
+                    //   Get.offAll(Congratulations());
                     // }
                   }),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Expanded(
               child: CustomButton(
                   titleText: 'False',
-                  color: Colors.red,
+                  color: redColor,
                   onPressed: () {
                     homeScreenController.falseValue();
-                    // if (question.answer[question.questionNumber.value] ==
-                    //     false) {
-                    //   question.correctAnswer.value++;
-                    //   question.checkAnswer.value = true;
-                    //   homeScreenController.icon = question.checkAnswer.value
-                    //       ? Icon(Icons.check, color: Colors.green)
-                    //       : Icon(Icons.close, color: Colors.red);
-                    //   homeScreenController.iconList
-                    //       .add(homeScreenController.icon);
-                    //   //print('Correct${question.correctAnswer.value}');
-                    // } else {
-                    //   question.incorrectAnswer.value++;
-                    //   question.checkAnswer.value = false;
-                    //   // question.correctAnswer.value++;
-                    //   // question.checkAnswer.value = true;
-                    //   homeScreenController.icon = question.checkAnswer.value
-                    //       ? Icon(Icons.check, color: Colors.green)
-                    //       : Icon(Icons.close, color: Colors.red);
-                    //   homeScreenController.iconList
-                    //       .add(homeScreenController.icon);
-                    //   //print('InCorrect${question.incorrectAnswer.value}');
-                    // }
-                    // question.questionNumber.value++;
-                    // //print('You Clicked the False Button');
-                    // if (question.questionNumber.value ==
-                    //     question.questionList.length) {
-                    //   question.questionNumber.value = 0;
-                    //   homeScreenController.checkListValue();
-                    // }
+                    if (questionController.questionNumber.value ==
+                        questionData.questionList.length) {
+                      Get.offAll(Congratulations());
+                    }
                   }),
             ),
             Obx(() => Padding(
@@ -114,17 +71,6 @@ class HomeScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: homeScreenController.iconList,
-                      // children: [
-                      //   ListView.builder(
-                      //       scrollDirection: Axis.horizontal,
-                      //       itemCount: homeScreenController.iconList.length,
-                      //       itemBuilder: (context, index) {
-                      //         return Padding(
-                      //           padding: EdgeInsets.all(8.0),
-                      //           child: homeScreenController.iconList[index],
-                      //         );
-                      //       }),
-                      // ],
                     ),
                   ),
                 )),
