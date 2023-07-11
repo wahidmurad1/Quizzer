@@ -27,6 +27,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
+      // transitionDuration: Duration.zero,
+      defaultTransition: Transition.noTransition,
       home: HomeScreen(),
     );
   }
