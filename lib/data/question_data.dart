@@ -1,11 +1,10 @@
 class QuestionData {
   List<String> questionList = [
-    'Hi this is your First Question',
-    'Hi this is your Second Question',
-    'Hi this is your Third Question',
-    'Hi this is your Fourth Question',
-    'Hi this is your Fifth Question',
+    'Hi this is your first question',
+    'Hi this is your second question',
+    'Hi this is your third question',
+    'Hi this is your fourth question',
+    'Hi this is your fifth question',
   ];
-
   List<bool> answer = [false, true, true, false, true];
 }

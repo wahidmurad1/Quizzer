@@ -1,3 +1,4 @@
-import 'package:flutter/material.dart';
-
-const congratsText = Text('Congratulations');
+const congratsText = 'Congratulations';
+const restartButtonText = 'Restart';
+const taskFinishedText = 'You finished your task successfully';
+const score = 'Your score is';

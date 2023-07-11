@@ -1,88 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quizzler/const/colors.dart';
-import 'package:quizzler/controller/question_controller.dart';
 import 'package:quizzler/data/question_data.dart';
 import 'package:quizzler/screen/congratulations.dart';
 
 class HomeScreenController extends GetxController {
-  QuestionController questionController = Get.put(QuestionController());
-  QuestionData questionData = Get.put(QuestionData());
-  checkListValue() {
-    if (questionController.questionNumber.value ==
-        questionData.questionList.length) {
-      //  Get.offAll(Congratulations());
-      // print(questionController.questionNumber.value ==
-      //     questionData.questionList.length),
-    }
-  }
+  QuestionData questionData = QuestionData();
+  RxInt questionNumber = 0.obs;
+  RxInt correctAnswer = 0.obs;
+  RxInt incorrectAnswer = 0.obs;
+  RxBool checkAnswer = true.obs;
 
-  // RxList<Icon> iconList = [].obs;
   RxList<Icon> iconList = <Icon>[].obs;
   late Icon icon;
 
-  trueValue() {
-    if (questionData.answer[questionController.questionNumber.value] == true) {
-      questionController.correctAnswer.value++;
-      questionController.checkAnswer.value = true;
-      icon = questionController.checkAnswer.value
-          ? Icon(Icons.check, color: Colors.green)
-          : Icon(Icons.close, color: Colors.red);
-      iconList.add(icon);
-      //print('Correct${question.correctAnswer.value}');
+  getValue(bool value) {
+    if (questionData.answer[questionNumber.value] == value) {
+      correctAnswer.value++;
+      checkAnswer.value = true;
+      icon = const Icon(Icons.check, color: greenColor);
     } else {
-      questionController.checkAnswer.value = false;
-      questionController.incorrectAnswer.value++;
-      icon = questionController.checkAnswer.value
-          ? Icon(Icons.check, color: Colors.green)
-          : Icon(Icons.close, color: Colors.red);
-      iconList.add(icon);
-      //print('InCorrect${question.incorrectAnswer.value}');
+      checkAnswer.value = false;
+      incorrectAnswer.value++;
+      icon = const Icon(Icons.close, color: redColor);
     }
-    questionController.questionNumber.value++;
-    //  print('You Clicked the True Button');
-    // if (questionController.questionNumber.value ==
-    //     questionData.questionList.length) {
-    //   questionController.questionNumber.value = 0;
-    //   Get.offAll(Congratulations());
-    // }
-  }
-
-  falseValue() {
-    if (questionData.answer[questionController.questionNumber.value] == false) {
-      questionController.correctAnswer.value++;
-      questionController.checkAnswer.value = true;
-      icon = questionController.checkAnswer.value
-          ? Icon(Icons.check, color: Colors.green)
-          : Icon(Icons.close, color: Colors.red);
-      iconList.add(icon);
-      //print('Correct${question.correctAnswer.value}');
-    } else {
-      questionController.incorrectAnswer.value++;
-      questionController.checkAnswer.value = false;
-      // question.correctAnswer.value++;
-      // question.checkAnswer.value = true;
-      icon = questionController.checkAnswer.value
-          ? Icon(Icons.check, color: Colors.green)
-          : Icon(Icons.close, color: Colors.red);
-      iconList.add(icon);
-      //print('InCorrect${question.incorrectAnswer.value}');
-    }
-    questionController.questionNumber.value++;
-    //print('You Clicked the False Button');
-    // if (questionController.questionNumber.value ==
-    //     questionData.questionList.length) {
-    //   questionController.questionNumber.value = 0;
-    //   checkListValue();
-    // }
+    iconList.add(icon);
+    questionNumber.value++;
   }
 
   valueLimitValidation() async {
-    if (questionController.questionNumber.value ==
-        questionData.questionList.length) {
-      questionController.questionNumber.value = 0;
+    if (questionNumber.value == questionData.questionList.length) {
+      questionNumber.value = 0;
       iconList.clear();
       await Get.offAll(Congratulations());
     }
+  }
+
+  getString() {
+    return questionData.questionList[questionNumber.value];
   }
 }

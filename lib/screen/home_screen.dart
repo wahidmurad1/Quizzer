@@ -1,20 +1,14 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:quizzler/const/colors.dart';
 import 'package:quizzler/const/styles.dart';
-import 'package:quizzler/data/question_data.dart';
-import 'package:quizzler/screen/congratulations.dart';
 import 'package:quizzler/widgets/custom_button.dart';
-import 'package:quizzler/controller/question_controller.dart';
 import 'package:get/get.dart';
 import 'package:quizzler/controller/home_screen_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
-
-  QuestionController questionController = Get.put(QuestionController());
-  HomeScreenController homeScreenController = Get.put(HomeScreenController());
-  QuestionData questionData = QuestionData();
+  final HomeScreenController homeScreenController =
+      Get.find<HomeScreenController>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,8 +22,7 @@ class HomeScreen extends StatelessWidget {
                   flex: 8,
                   child: Center(
                     child: Text(
-                      questionData.questionList[
-                          questionController.questionNumber.value],
+                      homeScreenController.getString(),
                       style: textStyles,
                     ),
                   ),
@@ -39,12 +32,8 @@ class HomeScreen extends StatelessWidget {
                   titleText: 'True',
                   color: greenColor,
                   onPressed: () {
-                    homeScreenController.trueValue();
+                    homeScreenController.getValue(true);
                     homeScreenController.valueLimitValidation();
-                    // if (questionController.questionNumber.value ==
-                    //     questionData.questionList.length) {
-                    //   Get.offAll(Congratulations());
-                    // }
                   }),
             ),
             const SizedBox(
@@ -55,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                   titleText: 'False',
                   color: redColor,
                   onPressed: () {
-                    homeScreenController.falseValue();
+                    homeScreenController.getValue(false);
                     homeScreenController.valueLimitValidation();
                   }),
             ),
