@@ -40,6 +40,7 @@ class HomeScreen extends StatelessWidget {
                   color: greenColor,
                   onPressed: () {
                     homeScreenController.trueValue();
+                    homeScreenController.valueLimitValidation();
                     // if (questionController.questionNumber.value ==
                     //     questionData.questionList.length) {
                     //   Get.offAll(Congratulations());
@@ -55,10 +56,7 @@ class HomeScreen extends StatelessWidget {
                   color: redColor,
                   onPressed: () {
                     homeScreenController.falseValue();
-                    if (questionController.questionNumber.value ==
-                        questionData.questionList.length) {
-                      Get.offAll(Congratulations());
-                    }
+                    homeScreenController.valueLimitValidation();
                   }),
             ),
             Obx(() => Padding(

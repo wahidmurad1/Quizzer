@@ -26,98 +26,63 @@ class HomeScreenController extends GetxController {
       questionController.correctAnswer.value++;
       questionController.checkAnswer.value = true;
       icon = questionController.checkAnswer.value
-          ? Icon(Icons.check, color: greenColor)
-          : Icon(Icons.close, color: redColor);
+          ? Icon(Icons.check, color: Colors.green)
+          : Icon(Icons.close, color: Colors.red);
       iconList.add(icon);
       //print('Correct${question.correctAnswer.value}');
     } else {
       questionController.checkAnswer.value = false;
       questionController.incorrectAnswer.value++;
       icon = questionController.checkAnswer.value
-          ? Icon(Icons.check, color: greenColor)
-          : Icon(Icons.close, color: redColor);
+          ? Icon(Icons.check, color: Colors.green)
+          : Icon(Icons.close, color: Colors.red);
       iconList.add(icon);
       //print('InCorrect${question.incorrectAnswer.value}');
     }
+    questionController.questionNumber.value++;
+    //  print('You Clicked the True Button');
     // if (questionController.questionNumber.value ==
     //     questionData.questionList.length) {
-    //   print("Hi it is in the last index");
-    //   print(questionData.questionList.length);
-    //   return Get.offAll(Congratulations());
-    //   //questionController.questionNumber.value = 0;
+    //   questionController.questionNumber.value = 0;
+    //   Get.offAll(Congratulations());
     // }
-
-    if (questionController.questionNumber.value ==
-        questionData.questionList.length) {
-      Get.off(Congratulations());
-    } else {
-      questionController.questionNumber.value++;
-    }
-
-    print(questionController.questionNumber.value + 1);
-    print(questionData.questionList.length);
-
-    //  print('You Clicked the True Button');
-    // else
   }
-
-  // trueValue() {
-  //   if (questionController.questionNumber.value >=
-  //       questionData.questionList.length) {
-  //     // Prevent further execution if all questions have been answered
-  //     return;
-  //   }
-
-  //   if (questionData.answer[questionController.questionNumber.value] == true) {
-  //     questionController.correctAnswer.value++;
-  //     questionController.checkAnswer.value = true;
-  //     icon = questionController.checkAnswer.value
-  //         ? Icon(Icons.check, color: greenColor)
-  //         : Icon(Icons.close, color: redColor);
-  //     iconList.add(icon);
-  //     //print('Correct${question.correctAnswer.value}');
-  //   } else {
-  //     questionController.checkAnswer.value = false;
-  //     questionController.incorrectAnswer.value++;
-  //     icon = questionController.checkAnswer.value
-  //         ? Icon(Icons.check, color: greenColor)
-  //         : Icon(Icons.close, color: redColor);
-  //     iconList.add(icon);
-  //     //print('InCorrect${question.incorrectAnswer.value}');
-  //   }
-
-  //   questionController.questionNumber.value++;
-
-  //   if (questionController.questionNumber.value ==
-  //       questionData.questionList.length) {
-  //     Get.offAll(Congratulations());
-  //   }
-  // }
 
   falseValue() {
     if (questionData.answer[questionController.questionNumber.value] == false) {
       questionController.correctAnswer.value++;
       questionController.checkAnswer.value = true;
       icon = questionController.checkAnswer.value
-          ? Icon(Icons.check, color: greenColor)
-          : Icon(Icons.close, color: redColor);
+          ? Icon(Icons.check, color: Colors.green)
+          : Icon(Icons.close, color: Colors.red);
       iconList.add(icon);
       //print('Correct${question.correctAnswer.value}');
     } else {
       questionController.incorrectAnswer.value++;
       questionController.checkAnswer.value = false;
+      // question.correctAnswer.value++;
+      // question.checkAnswer.value = true;
       icon = questionController.checkAnswer.value
-          ? Icon(Icons.check, color: greenColor)
-          : Icon(Icons.close, color: redColor);
+          ? Icon(Icons.check, color: Colors.green)
+          : Icon(Icons.close, color: Colors.red);
       iconList.add(icon);
+      //print('InCorrect${question.incorrectAnswer.value}');
     }
     questionController.questionNumber.value++;
     //print('You Clicked the False Button');
+    // if (questionController.questionNumber.value ==
+    //     questionData.questionList.length) {
+    //   questionController.questionNumber.value = 0;
+    //   checkListValue();
+    // }
+  }
+
+  valueLimitValidation() async {
     if (questionController.questionNumber.value ==
         questionData.questionList.length) {
-      Get.offAll(Congratulations());
-      //questionController.questionNumber.value = 0;
-      checkListValue();
+      questionController.questionNumber.value = 0;
+      iconList.clear();
+      await Get.offAll(Congratulations());
     }
   }
 }
